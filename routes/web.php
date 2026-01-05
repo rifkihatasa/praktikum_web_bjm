@@ -18,6 +18,9 @@ Route::get('/kasir', function () {
     return view('kasir.dashboard');
 });
 
+Route::get('/logout', [LoginController::class, 'logout']);
+
+
 // Route Admin
 Route::prefix('admin')->group(function () {
     Route::get('/', [App\Http\Controllers\AdminController::class, 'admin']);
