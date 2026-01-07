@@ -9,9 +9,9 @@ class AdminController extends Controller
 {
     public function admin()
     {
-        return view('admin.beranda');
+    return view('admin.beranda');
     }
-
+    
     public function barang()
     {
         $data = Barang::paginate(2);
