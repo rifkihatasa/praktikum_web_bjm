@@ -1,35 +1,69 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card shadow">
-            <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">Form Edit</h6>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0 font-weight-bold text-warning">
+                    ✏️ Edit Data Barang
+                </h5>
             </div>
-            <!-- Card Body -->
+
             <div class="card-body">
-                <form method="post" action="/admin/barang/update/{{$data->id}}">
+                <form method="post" action="/admin/barang/update/{{ $data->id }}">
                     @csrf
+
                     <div class="form-group">
-                        Kode Barang
-                        <input type="text" class="form-control" name="kode" required value="{{$data->kode}}">
+                        <label for="kode">Kode Barang</label>
+                        <input type="text"
+                               id="kode"
+                               name="kode"
+                               class="form-control"
+                               value="{{ $data->kode }}"
+                               required>
                     </div>
+
                     <div class="form-group">
-                        Nama Barang
-                        <input type="text" class="form-control" name="nama" required value="{{$data->nama}}">
+                        <label for="nama">Nama Barang</label>
+                        <input type="text"
+                               id="nama"
+                               name="nama"
+                               class="form-control"
+                               value="{{ $data->nama }}"
+                               required>
                     </div>
+
                     <div class="form-group">
-                        Stok
-                        <input type="text" class="form-control" name="stok" required value="{{$data->stok}}">
+                        <label for="stok">Stok</label>
+                        <input type="number"
+                               id="stok"
+                               name="stok"
+                               class="form-control"
+                               min="0"
+                               value="{{ $data->stok }}"
+                               required>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-lg"> <i class="fa fa-save"></i> UPDATE</button>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="/admin/barang" class="btn btn-secondary">
+                            <i class="fa fa-arrow-left mr-1"></i> Kembali
+                        </a>
+
+                        <button type="submit" class="btn btn-warning px-4">
+                            <i class="fa fa-save mr-1"></i> Update
+                        </button>
                     </div>
+
                 </form>
             </div>
         </div>
+
     </div>
 </div>
-    
+
 @endsection
