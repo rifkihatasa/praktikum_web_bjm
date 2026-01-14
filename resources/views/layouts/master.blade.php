@@ -15,17 +15,20 @@
 
     <!-- SB Admin CSS -->
     <link href="/sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
+
+    @stack('css')
 </head>
 
 <body id="page-top">
 
 <div id="wrapper">
 
-    <!-- Sidebar -->
+    <!-- ================= SIDEBAR ================= -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center"
+           href="{{ Auth::user()->role == 'admin' ? url('/admin') : url('/kasir') }}">
             <div class="sidebar-brand-icon">
                 <i class="fas fa-boxes"></i>
             </div>
@@ -36,32 +39,54 @@
 
         <hr class="sidebar-divider my-0">
 
-        <!-- Menu -->
+        <!-- Dashboard -->
         <li class="nav-item">
-            <a class="nav-link" href="/admin">
+            <a class="nav-link"
+               href="{{ Auth::user()->role == 'admin' ? url('/admin') : url('/kasir') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/admin/barang">
-                <i class="fas fa-fw fa-box"></i>
-                <span>Data Barang</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/admin/laporan">
-                <i class="fas fa-fw fa-file-alt"></i>
-                <span>Laporan</span>
-            </a>
-        </li>
-
         <hr class="sidebar-divider">
 
+        {{-- ========== ADMIN MENU ========== --}}
+        @if(Auth::user()->role === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/barang') }}">
+                    <i class="fas fa-fw fa-box"></i>
+                    <span>Data Barang</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/admin/laporan') }}">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Laporan</span>
+                </a>
+            </li>
+        @endif
+
+        {{-- ========== KASIR MENU ========== --}}
+        @if(Auth::user()->role === 'kasir')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/kasir/barang') }}">
+                    <i class="fas fa-fw fa-box"></i>
+                    <span>Data Barang</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/kasir/transaksi') }}">
+                    <i class="fas fa-fw fa-cash-register"></i>
+                    <span>Transaksi</span>
+                </a>
+            </li>
+        @endif
+
+        <hr class="sidebar-divider">
     </ul>
-    <!-- End Sidebar -->
+    <!-- ================= END SIDEBAR ================= -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -69,7 +94,7 @@
         <!-- Main Content -->
         <div id="content">
 
-            <!-- Topbar -->
+            <!-- ================= TOPBAR ================= -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 shadow-sm">
 
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -85,20 +110,13 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown"
                            role="button" data-toggle="dropdown">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                Admin
+                                {{ Auth::user()->name ?? 'User' }}
                             </span>
                             <img class="img-profile rounded-circle"
                                  src="/sbadmin/img/undraw_profile.svg">
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profil
-                            </a>
-
-                            <div class="dropdown-divider"></div>
-
                             <a class="dropdown-item" href="{{ url('/logout') }}">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
@@ -108,7 +126,7 @@
 
                 </ul>
             </nav>
-            <!-- End Topbar -->
+            <!-- ================= END TOPBAR ================= -->
 
             <!-- Page Content -->
             <div class="container-fluid">
@@ -116,7 +134,6 @@
             </div>
 
         </div>
-        <!-- End Main Content -->
 
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
@@ -143,6 +160,8 @@
 
 <x-notify::notify />
 @notifyJs
+
+@stack('js')
 
 </body>
 </html>

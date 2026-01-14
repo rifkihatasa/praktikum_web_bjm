@@ -54,4 +54,12 @@ Route::prefix('kasir')->group(function () {
 
     Route::get('/', [KasirController::class, 'index']);
 
+    Route::get('/barang', [KasirController::class, 'barang']);
+
+    Route::get('/transaksi', [KasirController::class, 'transaksi'])
+        ->name('kasir.transaksi');
+
+    Route::post('/transaksi', [KasirController::class, 'transaksiStore'])
+        ->name('kasir.transaksi.store');
 });
+
