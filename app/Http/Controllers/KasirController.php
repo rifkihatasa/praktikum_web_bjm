@@ -38,13 +38,19 @@ class KasirController extends Controller
         $barang = Barang::findOrFail($request->barang_id);
 
         if ((int)$barang->stok < $request->qty) {
-            return back()->with('error', 'Stok tidak mencukupi');
+            return back()->with('error', 'Stok barang "' . $barang->nama . '" tidak mencukupi.');
         }
 
+        // kurangi stok
         $barang->update([
             'stok' => (int)$barang->stok - $request->qty
         ]);
 
-        return back()->with('success', 'Transaksi berhasil, stok berkurang');
+        // notifikasi sukses (jelas & informatif)
+        return back()->with('success',
+            'Barang "' . $barang->nama . '" berhasil dikeluarkan sebanyak ' .
+            $request->qty . '. Sisa stok: ' . $barang->stok
+        );
     }
+
 }
